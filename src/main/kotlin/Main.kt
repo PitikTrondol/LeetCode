@@ -1,5 +1,4 @@
 import kotlin.random.Random
-import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
 
@@ -17,13 +16,22 @@ fun main(args: Array<String>) {
 //    TwoSum(nums = array, target = target).proof()
 //    println("------------------------")
 
-    println("Add Two Number")
-    AddTwoNumber(
-        list1 = createLinkedList(size = 10, default = 9),
-        list2 = createLinkedList(size = 9, default = 9)
-    ).proof()
-    println("------------------------\n")
+//    println("Add Two Number")
+//    AddTwoNumber(
+//        list1 = createLinkedList(size = 10, default = 9),
+//        list2 = createLinkedList(size = 9, default = 9)
+//    ).proof()
+//    println("------------------------\n")
 
+    val test = List(15){
+        Char(32+Random.nextInt(0,128-32))
+    }.joinToString("")
+    println("Longest Substring $test")
+//    println("Result 1 : ${LongestSubstring("abcabcbb").lengthOfLongestSubstring()}")
+//    println("Result 2 : ${LongestSubstring("bbbbb").lengthOfLongestSubstring()}")
+//    println("Result 3 : ${LongestSubstring("pwwkew").lengthOfLongestSubstring()}")
+//    println("Result 4 : ${LongestSubstring(test).lengthOfLongestSubstring()}")
+    println("Result 3 : ${LongestSubstring("advcwaertdf").lengthOfLongestSubstring()}")
 }
 
 fun createLinkedList(size: Int = 1, default: Int? = null): ListNode{
