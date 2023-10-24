@@ -1,4 +1,6 @@
+import sorting.MergeSort
 import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
 
@@ -23,15 +25,18 @@ fun main(args: Array<String>) {
 //    ).proof()
 //    println("------------------------\n")
 
-    val test = List(15){
-        Char(32+Random.nextInt(0,128-32))
-    }.joinToString("")
-    println("Longest Substring $test")
-//    println("Result 1 : ${LongestSubstring("abcabcbb").lengthOfLongestSubstring()}")
-//    println("Result 2 : ${LongestSubstring("bbbbb").lengthOfLongestSubstring()}")
-//    println("Result 3 : ${LongestSubstring("pwwkew").lengthOfLongestSubstring()}")
-//    println("Result 4 : ${LongestSubstring(test).lengthOfLongestSubstring()}")
-    println("Result 3 : ${LongestSubstring("advcwaertdf").lengthOfLongestSubstring()}")
+//    val test = List(15){
+//        Char(32+Random.nextInt(0,128-32))
+//    }.joinToString("")
+//    println("Longest Substring $test")
+//    println("Result 3 : ${LongestSubstring("advcwaertdf").lengthOfLongestSubstring()}")
+//    println("------------------------\n")
+
+    val source = IntArray(20){ it }.apply { shuffle() }
+    println("Before ${source.joinToString(", ")}")
+    val time = measureTimeMillis { MergeSort().sort(source) }
+    println("After ${source.joinToString(", ")}")
+    println("Time $time")
 }
 
 fun createLinkedList(size: Int = 1, default: Int? = null): ListNode{
