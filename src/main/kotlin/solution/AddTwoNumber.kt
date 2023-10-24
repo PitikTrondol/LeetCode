@@ -1,3 +1,7 @@
+package solution
+
+import kotlin.random.Random
+
 class AddTwoNumber(private val list1: ListNode?, private val list2: ListNode?) : Solution {
     override fun proof() {
         println("Proof ${printNode(addTwoNumbers())}")
@@ -56,4 +60,12 @@ class AddTwoNumber(private val list1: ListNode?, private val list2: ListNode?) :
 
 class ListNode(var `val`: Int) {
     var next: ListNode? = null
+}
+
+fun createLinkedList(size: Int = 1, default: Int? = null): ListNode {
+    val value = default ?: Random.nextInt(0, 9)
+    if(size == 1) return ListNode(value)
+    return ListNode(`val` = value,).apply {
+        next = createLinkedList(size = size-1, default = value)
+    }
 }

@@ -1,4 +1,4 @@
-import kotlin.math.abs
+package solution
 
 class TwoSum(private val nums: IntArray, private val target: Int) : Solution {
     override fun proof() {

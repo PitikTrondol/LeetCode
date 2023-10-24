@@ -1,3 +1,5 @@
+package solution
+
 class LongestSubstring(private val s: String) {
 
     fun lengthOfLongestSubstring(): Int{

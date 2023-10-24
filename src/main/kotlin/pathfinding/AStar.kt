@@ -1,0 +1,4 @@
+package pathfinding
+
+class AStar {
+}

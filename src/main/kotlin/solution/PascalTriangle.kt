@@ -1,6 +1,8 @@
+package solution
+
 import kotlin.math.min
 
-class PascalTriangle(private val rowIndex: Int) : Solution{
+class PascalTriangle(private val rowIndex: Int) : Solution {
     override fun proof() {
         println("Index $rowIndex")
         println("Result ${getRow(rowIndex).joinToString(", ")}")
