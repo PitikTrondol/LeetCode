@@ -1,5 +1,6 @@
 import pathfinding.AStar
 import pathfinding.Arena
+import pathfinding.Node
 import pathfinding.arenaArray
 import solution.ListNode
 import sorting.MergeSort
@@ -50,9 +51,10 @@ fun main(args: Array<String>) {
         println(line.joinToString(separator = " | ") { "${it.type}" })
     }
 
-    val path = AStar(arena).findPath(start, target)
+    var path : List<Node>
+    val time = measureTimeMillis { path = AStar(arena).findPath(start, target) }
     println("\n======")
-    println("RESULT ${path.joinToString(separator = " | ") { "${it.type} (${it.x}, ${it.y})" }}")
+    println("RESULT ${path.joinToString(separator = " | ") { "(${it.x}, ${it.y})" }} :: $time")
     println("======")
 
     arena.forEach { line ->

@@ -5,21 +5,21 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 val arenaArray = intArrayOf(
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 0,
     0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
     3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0,
+    0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 )
 
 class Arena {
@@ -27,11 +27,6 @@ class Arena {
     private var start = Node(0, 0, 0)
     private var target = Node(0, 0, 0)
     fun convert(arenaArray: IntArray, width: Int): Triple<List<List<Node>>, Node, Node> {
-//        if (arenaArray.size % width != 0) {
-//            println("Map is not square")
-//            return Triple(listOf(), start, target)
-//        }
-
         val map2D = mutableListOf<List<Node>>()
         val height = arenaArray.size / width
 
