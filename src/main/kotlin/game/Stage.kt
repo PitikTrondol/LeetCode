@@ -3,25 +3,65 @@ package game
 import kotlinx.coroutines.delay
 import pathfinding.AStar
 import pathfinding.Arena
+import pathfinding.Node
 import pathfinding.arenaArray
 
 class Stage(arena: Arena) {
     private var isCheeseFound = false
     private var isMouseCaught = false
-    private val stage = arena.convert(arenaArray, 12)
-    private val mouseZone = stage.slice(stage.size-2 until stage.size)
-    private val mid = stage.size / 2
-    private val cheeseZone = stage.slice(mid-1 until mid+1)
-    private val catZone = stage.slice(1 .. 2)
-    private val mouseStart = arena.randomSpawn(mouseZone)
-    private val catStart = arena.randomSpawn(catZone)
-    private val cheese = arena.randomSpawn(cheeseZone)
+    private val stage = arena.convert(arenaArray, 21)
+    private val mouseStart = arena.randomSpawn(stage[1])
+    private val catStart = arena.randomSpawn(stage[19])
+    private val cheese = stage[10][10]
     private val finder = AStar(stage)
     private val mouse = Mouse(finder, mouseStart)
     private val cat = Cat(finder, catStart)
 
+    private fun drawStage(stage: List<List<Node>>, cat: Node, mouse: Node, cheese: Node){
+        var separator = 0
+        stage.forEach { line ->
+            println(
+                line.joinToString(separator = " | ") {
+                    when (it) {
+                        cheese -> {
+                            "*"
+                        }
+                        cat -> {
+                            "W"
+                        }
+                        mouse -> {
+                            "K"
+                        }
+                        else -> {
+                            "${it.type}"
+                        }
+                    }
+                }.also { separator = it.length }
+            )
+        }
+        (0 until separator).forEach {
+            print("-")
+        }
+        println()
+    }
+
+    private suspend fun startCountDown(){
+        delay(3000)
+        var count = 3
+        while (count > 0){
+            print("$count  ")
+            count-=1
+            delay(1000)
+        }
+        println("START")
+    }
+
     suspend fun startMatch(){
-        println("START (${mouseStart.x}, ${mouseStart.y}) :: (${catStart.x}, ${catStart.y})")
+
+        println("MOUSE (${mouseStart.x}, ${mouseStart.y}) :: CAT (${catStart.x}, ${catStart.y}) :: CHEESE (${cheese.x}, ${cheese.y})")
+        drawStage(stage = stage, cat = catStart, mouse = mouseStart, cheese = cheese)
+
+        startCountDown()
 
         while (!isCheeseFound){
             val mouseStep = mouse.nextMove(cheese)
@@ -29,14 +69,7 @@ class Stage(arena: Arena) {
             isCheeseFound = mouseStep == cheese
             isMouseCaught = mouseStep == catStep
 
-            stage.forEach { line ->
-                println(
-                    line.joinToString(separator = " | ") {
-                        if(it == cheese) "@" else if(it == mouseStep) "#" else if(it == catStep) "*" else "${it.type}"
-                    }
-                )
-            }
-            println("--------------------------------------------------")
+            drawStage(stage = stage, cat = catStep, mouse = mouseStep, cheese = cheese)
 
             if(isMouseCaught) {
                 println("MOUSE GOT CAUGHT!")
