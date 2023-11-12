@@ -1,32 +1,33 @@
 package pathfinding
 
-import java.lang.Integer.max
 import kotlin.math.abs
 import kotlin.math.sqrt
 
 val arenaArray = intArrayOf(
-    0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 0,
-    0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
-    3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0,
-    0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 3, 3, 3, 0, 3, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 3,
+    3, 0, 0, 3, 0, 0, 0, 3, 3, 3, 0, 3,
+    3, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3,
+    3, 3, 3, 0, 3, 3, 3, 0, 3, 3, 3, 3,
+    3, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 3, 0, 3, 0, 3, 3, 3, 0, 3,
+    3, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3,
+    3, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 3,
+    3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 )
 
 class Arena {
 
-    private var start = Node(0, 0, 0)
-    private var target = Node(0, 0, 0)
-    fun convert(arenaArray: IntArray, width: Int): Triple<List<List<Node>>, Node, Node> {
+    fun convert(arenaArray: IntArray, width: Int): List<List<Node>> {
         val map2D = mutableListOf<List<Node>>()
         val height = arenaArray.size / width
 
@@ -38,18 +39,32 @@ class Arena {
                     x = w,
                     y = h
                 )
-
-                if (node.type == 1) start = node
-                if (node.type == 2) target = node
+                
                 tmp.add(node)
             }
             map2D.add(tmp)
         }
 
-        return Triple(map2D, start, target)
+        return map2D
+    }
+
+    fun chunkMap(map: List<List<Node>>, yZone: IntRange): List<List<Node>>{
+        return map.slice(yZone)
+    }
+
+    fun randomSpawn(spawnZone: List<List<Node>>): Node{
+        val candidate = mutableListOf<Node>()
+        for(nodes in spawnZone){
+            for (node in nodes){
+                if(node.type != 0) continue
+                candidate.add(node)
+            }
+        }
+        return candidate.apply { shuffle(); shuffle() }[0]
     }
 }
 
+fun Node?.orEmpty(): Node = this ?: Node(0, 0, 0)
 class Node(val type: Int, val x: Int, val y: Int) {
 
     private var _g = 0
@@ -85,6 +100,6 @@ class Node(val type: Int, val x: Int, val y: Int) {
     }
 
     override fun toString(): String {
-        return "$type"
+        return "(${x}, $y)"
     }
 }

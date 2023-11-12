@@ -1,6 +1,7 @@
 package pathfinding
 
 class AStar(private val arena: List<List<Node>>) {
+
     fun findPath(start: Node, target: Node): List<Node> {
         val toSearch = mutableListOf<Node>().apply { add(start) }
         val processed = mutableListOf<Node>()
@@ -18,10 +19,10 @@ class AStar(private val arena: List<List<Node>>) {
             toSearch.remove(current)
 
             if(current == target){
-                var currentPath: Node? = target
-                while (currentPath != null){
+                var currentPath: Node = target
+                while (currentPath != start){
                     path.add(currentPath)
-                    currentPath = currentPath.next
+                    currentPath = currentPath.next.orEmpty()
                 }
 
                 return path

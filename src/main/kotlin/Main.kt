@@ -1,10 +1,9 @@
+import game.Stage
+import kotlinx.coroutines.runBlocking
 import pathfinding.AStar
 import pathfinding.Arena
 import pathfinding.Node
 import pathfinding.arenaArray
-import solution.ListNode
-import sorting.MergeSort
-import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
@@ -36,30 +35,43 @@ fun main(args: Array<String>) {
 //    println("------------------------\n")
 
 //    println("Merge Sort")
-//    val source = IntArray(20){ it }.apply { shuffle() }
-//    println("Before ${source.joinToString(", ")}")
-//    val time = measureTimeMillis { MergeSort().sort(source) }
-//    println("After ${source.joinToString(", ")}")
-//    println("Time $time")
+//    val source = IntArray(9009000){ it }.apply { shuffle() }
+//    val source2 = IntArray(9009000){ it }.apply { shuffle() }
+//    var time = measureTimeMillis { MergeSort().test.invoke(source) }
+//    println("Deep Recursive $time")
+//    time = measureTimeMillis { MergeSort().sort(result) }
+//    println("Normal $time")
+//    var result = IntArray(20){ it }.apply { shuffle() }
+//    println("RESULT ${result.joinToString(", ")}")
+//    MergeSort().sort(result)
+//    println("RESULT ${result.joinToString(", ")}")
 //    println("------------------------\n")
 
-//    println(arenaArray.joinToString(", "))
 //    println("--------------------------------------")
-    val (arena, start, target) = Arena().convert(arenaArray, 12)
-    println("${start.x}, ${start.y} | ${target.x}, ${target.y}")
-    arena.forEach { line ->
-        println(line.joinToString(separator = " | ") { "${it.type}" })
-    }
+//    val arena = Arena()
+//    val map = arena.convert(arenaArray, 12)
+//    val start = arena.randomSpawn(map.slice(map.size-2 until map.size))
+//    val target = arena.randomSpawn(map.slice(1 .. 2))
+//    println("${start.x}, ${start.y} | ${target.x}, ${target.y}")
+//
+//    map.forEach { line ->
+//        println(line.joinToString(separator = " | ") { "${it.type}" })
+//    }
+//
+//    var path : List<Node>
+//    val time = measureTimeMillis { path = AStar(map).findPath(start, target) }
+//    println("======")
+//    println("RESULT ${path.joinToString(separator = " | ") { "(${it.x}, ${it.y})" }} :: $time")
+//    println("======")
+//
+//    map.forEach { line ->
+//        println(line.joinToString(separator = " | "){
+//            if(path.contains(it)) "*" else "${it.type}"}
+//        )
+//    }
 
-    var path : List<Node>
-    val time = measureTimeMillis { path = AStar(arena).findPath(start, target) }
-    println("\n======")
-    println("RESULT ${path.joinToString(separator = " | ") { "(${it.x}, ${it.y})" }} :: $time")
-    println("======")
-
-    arena.forEach { line ->
-        println(line.joinToString(separator = " | "){
-            if(path.contains(it)) "*" else "${it.type}"}
-        )
+    runBlocking {
+        val stage = Stage(Arena())
+        stage.startMatch()
     }
 }
